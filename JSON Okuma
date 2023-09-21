@@ -1,0 +1,32 @@
+ <script>
+
+      function getData()
+      {
+        let gelenVeri = new XMLHttpRequest();
+        gelenVeri.onreadystatechange = function()
+        {
+          if(gelenVeri.readyState==4 && gelenVeri.status==200)
+          {
+            let strJSON = gelenVeri.responseText;
+            let obj = JSON.parse(strJSON);
+            let table = document.getElementById("tablo");
+            let satirlar="";
+            for(let i=0; i<obj.data.length; i++)
+            {
+                satirlar +="<tr>";
+                satirlar +="<td>" + obj.data[i].first_name + "</td>";
+                satirlar +="<td>" + obj.data[i].last_name + "</td>";
+                satirlar +="<td>" + obj.data[i].email + "</td>";
+                satirlar +="<td><img src='" + obj.data[i].avatar + "'</td>";
+                satirlar +="</tr>";
+            }
+            table.innerHTML=satirlar;
+          }
+        };
+        
+        gelenVeri.open("GET","https://reqres.in/api/users?page=1",true);
+        gelenVeri.send();
+
+      }
+  
+     </script>
